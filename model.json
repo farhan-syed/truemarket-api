@@ -1,0 +1,49 @@
+{
+    "Car": [{
+        "id": 1,
+        "year": 2022,
+        "brand": "BMW",
+        "model": "3 Series",
+        "trim": "330i",
+        "transmission": "8 Speed Automatic",
+        "engine": "2.0L 255hp I4"
+    },
+    {
+        "id": 2,
+        "year": 2022,
+        "brand": "BMW",
+        "model": "3 Series",
+        "trim": "330i",
+        "transmission": "8 Speed Automatic",
+        "engine": "2.0L 255hp I4"
+    }],
+    
+    "Post" : [{
+        "id": 1,
+        "car_id": 1,
+        "condition": "new",
+        "msrp": 49470,
+        "down_payment": 15000,
+        "tax": 3000,
+        "market_adjustment": 0,
+        "doc_fee": 100,
+        "financing": "loan",
+        "date": "07-14-2022",
+        "image_url?": "aws_s3_bucket_url",
+        "created_at": "11-02-2022"
+    },
+    {
+        "id": 2,
+        "car_id": 2,
+        "condition": "new",
+        "msrp": 65450,
+        "down_payment": 0,
+        "tax": 4000,
+        "market_adjustment": 0,
+        "doc_fee": 100,
+        "financing": "lease",
+        "date": "07-14-2022",
+        "image_url?": "aws_s3_bucket_url",
+        "created_at": "11-02-2022"
+    }]
+}
