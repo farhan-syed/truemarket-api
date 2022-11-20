@@ -4,13 +4,18 @@ const fastify = require('fastify')({
 })
 
 // Declare a route
-const data_model = require('./model.json')
+// const data_model = require('./model.json')
 fastify.get('/', async (request, reply) => {
-    return {
-        data_model
-    }
+    reply.send({
+        hello: 'world'
+    })
 })
 
+// Register routes
+const postRoutes = require('./routes/posts')
+postRoutes.forEach((route, index) => {
+    fastify.route(route)
+})
 
 // Run the server
 const start = async () => {
