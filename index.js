@@ -17,6 +17,11 @@ postRoutes.forEach((route, index) => {
     fastify.route(route)
 })
 
+const carRoutes = require('./routes/cars')
+carRoutes.forEach((route, index) => {
+    fastify.route(route)
+})
+
 // Run the server
 const start = async () => {
     try {
