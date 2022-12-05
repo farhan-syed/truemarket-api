@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model car {
+  id           Int    @id @default(autoincrement())
+  year         Int    @db.SmallInt
+  make         String @db.VarChar(30)
+  model        String @db.VarChar(30)
+  trim         String @db.VarChar(30)
+  transmission String @db.VarChar(30)
+  engine       String @db.VarChar(30)
+  post         post[]
+}
+
+model post {
+  id                Int       @id @default(autoincrement())
+  car_id            Int
+  condition         condition
+  msrp              Int
+  down_payment      Int
+  tax               Int
+  market_adjustment Int
+  doc_fee           Int
+  options           String?
+  image_url         String?   @db.VarChar
+  purchase_date     DateTime  @db.Date
+  created_at        DateTime  @default(now()) @db.Timestamp(6)
+  car               car       @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum condition {
+  New
+  Used
+}
