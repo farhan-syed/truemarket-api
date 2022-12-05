@@ -1,25 +1,8 @@
-let cars = [
-    {
-        "id": 1,
-        "year": 2022,
-        "brand": "BMW",
-        "model": "3 Series",
-        "trim": "330i",
-        "transmission": "8 Speed Automatic",
-        "engine": "2.0L 255hp I4"
-    },
-    {
-        "id": 2,
-        "year": 2022,
-        "brand": "BMW",
-        "model": "3 Series",
-        "trim": "330i",
-        "transmission": "8 Speed Automatic",
-        "engine": "2.0L 255hp I4"
-    }
-]
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
 
 const getAllCars = async (req, reply) => {
+    const cars = await prisma.car.findMany();
     return cars
 }
 
@@ -30,16 +13,23 @@ const getCar = async (req, reply) => {
 }
 
 const createCar = async (req, reply) => {
-    
+    const { year, make, model, trim, transmission, engine } = req.body
+    const car = await prisma.car.create({
+        data: {
+            year: year,
+            make: make, 
+            model: model,
+            trim: trim,
+            transmission: transmission,
+            engine: engine
+        }
+    })
+    return car.id
 }
 
-const updateCar = async (req, reply) => {
+const updateCar = async (req, reply) => {}
 
-}
-
-const deleteCar = async (req, reply) => {
-
-}
+const deleteCar = async (req, reply) => {}
 
 module.exports = {
     getAllCars,

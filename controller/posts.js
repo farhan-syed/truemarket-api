@@ -1,55 +1,56 @@
-let posts = [
-    {
-        "id": 1,
-        "car_id": 1,
-        "condition": "new",
-        "msrp": 49470,
-        "down_payment": 15000,
-        "tax": 3000,
-        "market_adjustment": 0,
-        "doc_fee": 100,
-        "financing": "loan",
-        "date": "07-14-2022",
-        "image_url?": "aws_s3_bucket_url",
-        "created_at": "11-02-2022"
-    },
-    {
-        "id": 2,
-        "car_id": 2,
-        "condition": "new",
-        "msrp": 65450,
-        "down_payment": 0,
-        "tax": 4000,
-        "market_adjustment": 0,
-        "doc_fee": 100,
-        "financing": "lease",
-        "date": "07-14-2022",
-        "image_url?": "aws_s3_bucket_url",
-        "created_at": "11-02-2022"
-    }
-]
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
 
 const getAllPosts = async (req, reply) => {
+    const posts = await prisma.post.findMany()
     return posts
 }
 
 const getPost = async (req, reply) => {
     const id = Number(req.params.id);
-    const post = posts.find(post => post.id === id)
+    // const post = posts.find(post => post.id === id)
+    const post = await prisma.post.findUnique({
+        where: {
+            id: id
+        }
+    })
     return post
 }
 
 const createPost = async (req, reply) => {
-    
+    const { car_id, condition, msrp, down_payment, tax, market_adjustment, doc_fee, options, image_id, purchase_date } = req.body
+    const post = await prisma.post.create({
+        data: {
+            car_id: car_id,
+            condition: condition,
+            msrp: msrp,
+            down_payment: down_payment,
+            tax: tax, 
+            market_adjustment: market_adjustment,
+            doc_fee: doc_fee, 
+            options: options,
+            image_id: image_id,
+            purchase_date: new Date(purchase_date)
+        }
+    })
+    return post
 }
 
 const updatePost = async (req, reply) => {
-
+    const id = Number(req.params.id)
+    const post = await prisma.post.update({
+        where: {
+            id: id
+        }, 
+        data: {
+            market_adjustment: 5000
+        }
+    })
+    return post
 }
 
-const deletePost = async (req, reply) => {
-
-}
+const deletePost = async (req, reply) => {}
 
 module.exports = {
     getAllPosts,
