@@ -3,6 +3,21 @@ const fastify = require('fastify')({
     logger: true
 })
 
+const cors = require('@fastify/cors')
+fastify.register(cors, {
+    // put cors options here
+    origin: (origin, cb) => {
+        const hostname = new URL(origin).hostname
+        if(hostname === "localhost"){
+          //  Request from localhost will pass
+          cb(null, true)
+          return
+        }
+        // Generate an error on other origins, disabling access
+        cb(new Error("Not allowed"), false)
+      }
+})
+
 // Declare a route
 // const data_model = require('./model.json')
 fastify.get('/', async (request, reply) => {
