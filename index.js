@@ -6,7 +6,7 @@ const fastify = require('fastify')({
 const cors = require('@fastify/cors')
 fastify.register(cors, {
     // put cors options here
-    origin: 'http://localhost:3001'
+    origin: 'http://localhost:3002'
 })
 
 // Declare a route
