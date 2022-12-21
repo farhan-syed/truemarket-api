@@ -1,9 +1,16 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
+function decimalToCents(decimal){
+    return Math.round(decimal * 100)
+}
 
 const getAllPosts = async (req, reply) => {
-    const posts = await prisma.post.findMany()
+    const posts = await prisma.post.findMany({
+        include: {
+            car: true
+        }
+    })
     return posts
 }
 
@@ -13,28 +20,42 @@ const getPost = async (req, reply) => {
     const post = await prisma.post.findUnique({
         where: {
             id: id
+        },
+        include: {
+            car: true
         }
     })
     return post
 }
 
 const createPost = async (req, reply) => {
-    const { car_id, condition, msrp, down_payment, tax, market_adjustment, doc_fee, options, image_id, purchase_date } = req.body
+    const { condition, msrp, down_payment, tax, market_adjustment, doc_fee, options, image_id, purchase_date, year, make, model, trim, transmission, engine } = req.body
+
     const post = await prisma.post.create({
         data: {
-            car_id: car_id,
             condition: condition,
-            msrp: msrp,
-            down_payment: down_payment,
-            tax: tax, 
-            market_adjustment: market_adjustment,
-            doc_fee: doc_fee, 
+            msrp: decimalToCents(msrp),
+            down_payment: decimalToCents(down_payment),
+            tax: decimalToCents(tax), 
+            market_adjustment: decimalToCents(market_adjustment),
+            doc_fee: decimalToCents(doc_fee), 
             options: options,
-            image_id: image_id,
-            purchase_date: new Date(purchase_date)
+            image_url: null,
+            purchase_date: new Date(purchase_date),
+            car:{
+                create: {
+                    year: parseInt(year),
+                    make: make,
+                    model: model,
+                    trim: trim,
+                    transmission: transmission,
+                    engine: engine
+                }   
+            }
         }
     })
-    return post
+    
+    return post.id
 }
 
 const updatePost = async (req, reply) => {
