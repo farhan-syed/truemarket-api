@@ -1,6 +1,6 @@
 // Require the framework and instantiate it
 const fastify = require('fastify')({
-    logger: true
+    logger: false
 })
 
 const cors = require('@fastify/cors')
@@ -9,13 +9,15 @@ fastify.register(cors, {
     origin: 'http://localhost:3002'
 })
 
+fastify.register(require('@fastify/multipart'))
+
 // Declare a route
 // const data_model = require('./model.json')
-fastify.get('/', async (request, reply) => {
-    reply.send({
-        hello: 'world'
-    })
-})
+// fastify.get('/', async (request, reply) => {
+//     reply.send({
+//         hello: 'world'
+//     })
+// })
 
 // Register routes
 const postRoutes = require('./routes/posts')

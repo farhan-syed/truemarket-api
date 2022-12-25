@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -27,7 +27,7 @@ model post {
   down_payment      Int
   tax               Int
   market_adjustment Int
-  doc_fee           Int
+  fees              Int
   options           String?
   image_url         String?   @db.VarChar
   purchase_date     DateTime  @db.Date
