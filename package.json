@@ -11,7 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/cors": "^8.2.0",
+    "@fastify/multipart": "^7.3.0",
     "@prisma/client": "^4.7.1",
+    "aws-sdk": "^2.1281.0",
     "fastify": "^4.9.2"
   },
   "devDependencies": {
