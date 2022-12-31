@@ -15,14 +15,21 @@ const routes = [{
         handler: postController.createPost
     },
     {
-        method: 'PUT',
-        url: '/api/posts/:id',
-        handler: postController.updatePost
-    },
-    {
-        method: 'DELETE',
-        url: '/api/posts/:id',
-        handler: postController.deletePost
+        method: 'GET',
+        url: '/api/search',
+        handler: postController.searchPosts
     }
+    
+    // ,
+    // {
+    //     method: 'PUT',
+    //     url: '/api/posts/:id',
+    //     handler: postController.updatePost
+    // },
+    // {
+    //     method: 'DELETE',
+    //     url: '/api/posts/:id',
+    //     handler: postController.deletePost
+    // }
 ]
 module.exports = routes

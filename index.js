@@ -6,10 +6,12 @@ const fastify = require('fastify')({
 const cors = require('@fastify/cors')
 fastify.register(cors, {
     // put cors options here
-    origin: 'http://localhost:3002'
+    // origin: ['http://localhost:3002']
 })
 
 fastify.register(require('@fastify/multipart'))
+
+require('dotenv').config()
 
 // Declare a route
 // const data_model = require('./model.json')
