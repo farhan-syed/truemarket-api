@@ -27,11 +27,12 @@ model post {
   down_payment      Int
   tax               Int
   market_adjustment Int
-  fees              Int
   options           String?
-  image_url         String?   @db.VarChar
   purchase_date     DateTime  @db.Date
   created_at        DateTime  @default(now()) @db.Timestamp(6)
+  fees              Int
+  image_url         String?   @db.VarChar
+  zipcode           Int
   car               car       @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
