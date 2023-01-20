@@ -41,16 +41,23 @@ const algoliasearch = require('algoliasearch')
 const algoliaClient = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_KEY)
 const postIndex = algoliaClient.initIndex('post')
 
+function totalCost(msrp, market_adjustment, fees, tax){
+    const total = msrp + market_adjustment + fees + tax
+    return total
+}
+
 async function saveToAlgolia(object){
 
     console.log(object)
 
-    const { id, condition, options, zipcode, image_url, purchase_date } = object
+    const { id, condition, msrp, tax, market_adjustment, fees, options, zipcode, image_url, purchase_date } = object
     const { year, make, model, trim, transmission, engine } = object.car
+    
 
     const record = [{
         objectID: id,
         condition: condition,
+        total_cost: totalCost(msrp, market_adjustment, fees, tax),
         options: options,
         zipcode: zipcode,
         image_url: image_url,
