@@ -33,6 +33,7 @@ model post {
   fees              Int
   image_url         String?   @db.VarChar
   zipcode           Int
+  user_id           String    @db.VarChar
   car               car       @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
