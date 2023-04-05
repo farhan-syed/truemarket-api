@@ -6,7 +6,7 @@ const routes = [
     url: '/api/posts',
     handler: postController.getAllPosts,
   },
-  { method: 'GET', url: '/api/posts/:id', handler: postController.getPost },
+  { method: 'GET', url: '/api/posts/:id', handler: postController.getPostById },
   {
     method: 'POST',
     url: '/api/posts',
@@ -17,16 +17,5 @@ const routes = [
     url: '/api/posts/user/:id',
     handler: postController.getPostsByUserId,
   },
-  // ,
-  // {
-  //     method: 'PUT',
-  //     url: '/api/posts/:id',
-  //     handler: postController.updatePost
-  // },
-  // {
-  //     method: 'DELETE',
-  //     url: '/api/posts/:id',
-  //     handler: postController.deletePost
-  // }
 ]
 module.exports = routes

@@ -21,17 +21,39 @@ const getAllPosts = async (req, reply) => {
   return posts
 }
 
-const getPost = async (req, reply) => {
+const getPostById = async (req, reply) => {
   const id = Number(req.params.id)
-  // const post = posts.find(post => post.id === id)
   const post = await prisma.post.findUnique({
     where: {
       id: id,
     },
-    include: {
-      car: true,
+    select: {
+      id: true,
+      condition: true,
+      msrp: true,
+      down_payment: true,
+      tax: true,
+      market_adjustment: true,
+      options: true,
+      purchase_date: true,
+      created_at: true,
+      fees: true,
+      image_url: true,
+      zipcode: true,
+      car: {
+        select: {
+          id: true,
+          year: true,
+          make: true,
+          model: true,
+          trim: true,
+          transmission: true,
+          engine: true,
+        },
+      },
     },
   })
+  console.log(post)
   return post
 }
 
@@ -47,63 +69,6 @@ const getPostsByUserId = async (req, reply) => {
   })
 
   return posts
-}
-
-const algoliasearch = require('algoliasearch')
-const algoliaClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_ADMIN_KEY
-)
-const postIndex = algoliaClient.initIndex('post')
-
-function totalCost(msrp, market_adjustment, fees, tax) {
-  const total = msrp + market_adjustment + fees + tax
-  return total
-}
-
-async function saveToAlgolia(object) {
-  const {
-    id,
-    condition,
-    msrp,
-    tax,
-    market_adjustment,
-    fees,
-    options,
-    zipcode,
-    image_url,
-    purchase_date,
-  } = object
-  const { year, make, model, trim, transmission, engine } = object.car
-
-  const record = [
-    {
-      objectID: id,
-      condition: condition,
-      total_cost: totalCost(msrp, market_adjustment, fees, tax),
-      options: options,
-      zipcode: zipcode,
-      image_url: image_url,
-      purchase_date: purchase_date,
-      car: {
-        year: year,
-        make: make,
-        model: model,
-        trim: trim,
-        transmisåsion: transmission,
-        engine: engine,
-      },
-    },
-  ]
-
-  postIndex
-    .saveObjects(record)
-    .then(({ objectIDs }) => {
-      console.log(objectIDs)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
 }
 
 const createPost = async (req, reply) => {
@@ -139,7 +104,7 @@ const createPost = async (req, reply) => {
 
   const post = await prisma.post.create({
     data: {
-      user_id: 'user_id',
+      user_id: data.fields.user_data.value,
       condition: condition,
       msrp: decimalToCents(msrp),
       down_payment: decimalToCents(down_payment),
@@ -166,29 +131,12 @@ const createPost = async (req, reply) => {
     },
   })
 
-  saveToAlgolia(post)
-
   return post.id
 }
 
-// const updatePost = async (req, reply) => {
-//     const id = Number(req.params.id)
-//     const post = await prisma.post.update({
-//         where: {
-//             id: id
-//         },
-//         data: {
-//             market_adjustment: 5000
-//         }
-//     })
-//     return post
-// }
-
-// const deletePost = async (req, reply) => {}
-
 module.exports = {
   getAllPosts,
-  getPost,
+  getPostById,
   createPost,
   getPostsByUserId,
 }
