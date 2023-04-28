@@ -12,7 +12,6 @@ fastify.register(cors, {
 fastify.register(require('@fastify/multipart'))
 
 require('dotenv').config()
-
 // Register routes
 const postRoutes = require('./routes/posts')
 postRoutes.forEach((route, index) => {
