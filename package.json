@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "nodemon index"
+    "run": "nodemon index",
+    "postinstall": "prisma generate"
   },
   "author": "Farhan Syed",
   "license": "ISC",
