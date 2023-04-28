@@ -27,7 +27,7 @@ searchRoutes.forEach((route, index) => {
 const start = async () => {
   try {
     await fastify.listen({
-      port: 8080,
+      port: 3000,
     })
   } catch (err) {
     fastify.log.error(err)
