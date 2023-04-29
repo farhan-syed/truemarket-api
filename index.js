@@ -24,10 +24,12 @@ searchRoutes.forEach((route, index) => {
 })
 
 // Run the server
+const port = process.env.PORT || 3000
 const start = async () => {
   try {
     await fastify.listen({
-      port: 8080,
+      port: port,
+      host: '0.0.0.0',
     })
   } catch (err) {
     fastify.log.error(err)
