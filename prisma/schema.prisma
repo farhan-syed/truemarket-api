@@ -24,16 +24,16 @@ model post {
   car_id            Int
   condition         condition
   msrp              Int
-  down_payment      Int
+  discount          Int
   tax               Int
   market_adjustment Int
   options           String?
-  purchase_date     DateTime  @db.Date
+  purchase_date     DateTime
   created_at        DateTime  @default(now()) @db.Timestamp(6)
   fees              Int
   image_url         String?   @db.VarChar
-  zipcode           Int
   user_id           String    @db.VarChar
+  zipcode           Int
   car               car       @relation(fields: [car_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
