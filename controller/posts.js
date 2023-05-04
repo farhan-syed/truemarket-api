@@ -31,7 +31,7 @@ const getPostById = async (req, reply) => {
       id: true,
       condition: true,
       msrp: true,
-      down_payment: true,
+      discount: true,
       tax: true,
       market_adjustment: true,
       options: true,
@@ -53,7 +53,6 @@ const getPostById = async (req, reply) => {
       },
     },
   })
-  console.log(post)
   return post
 }
 
@@ -77,7 +76,7 @@ const createPost = async (req, reply) => {
   const {
     condition,
     msrp,
-    down_payment,
+    discount,
     tax,
     market_adjustment,
     fees,
@@ -107,7 +106,7 @@ const createPost = async (req, reply) => {
       user_id: data.fields.user_data.value,
       condition: condition,
       msrp: decimalToCents(msrp),
-      down_payment: decimalToCents(down_payment),
+      discount: decimalToCents(discount),
       tax: decimalToCents(tax),
       market_adjustment: decimalToCents(market_adjustment),
       fees: decimalToCents(fees),
